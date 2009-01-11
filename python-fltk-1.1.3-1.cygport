@@ -1,0 +1,17 @@
+inherit distutils
+
+DESCRIPTION="Python FLTK 1.1 bindings"
+HOMEPAGE="http://pyfltk.sourceforge.net/"
+SRC_URI="mirror://sourceforge/pyfltk/pyFltk-${PV}.tar.gz"
+SRC_DIR="pyFltk-${PV}"
+PATCH_URI="mirror://portage/dev-python/pyfltk/files/pyfltk-${PV}-python25.patch"
+
+DIFF_EXCLUDES="fltk_wrap.cpp"
+
+src_compile() {
+	lndirs
+	cd ${B}/python
+	${PYTHON} MakeSwig.py || error "swig failed"
+	cd ${B}
+	distutils_compile
+}
